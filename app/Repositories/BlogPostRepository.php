@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\BlogPost as Model;
 use Illuminate\Database\Eloquent\Collection;
 
+
 /**
  * Class BlogPostRepository.
  */
@@ -27,6 +28,12 @@ class BlogPostRepository extends CoreRepository
         $result = $this->startConditions()
                     ->select($columns)
                     ->orderBy('id','DESC')
+                    ->with([
+                        'category' => function ($query) {
+                            $query->select(['id', 'title']);
+                        },
+                        'user:id,name',
+                    ])
                     ->paginate(25);
             
         return $result;
