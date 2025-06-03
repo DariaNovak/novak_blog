@@ -68,7 +68,7 @@ public function getAllWithPaginate($perPage = null)
 
     $result = $this
         ->startConditions()
-        ->select($columns)
+        ->select($columns) ->with(['parentCategory:id,title',])
         ->paginate($perPage); //можна $columns додати сюди
         
     return $result;
