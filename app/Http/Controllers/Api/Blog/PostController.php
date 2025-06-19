@@ -17,4 +17,21 @@ class PostController extends Controller
             'status' => 'success'
         ]);
     }
+
+    public function show($id)
+    {
+        $post = BlogPost::with(['user', 'category'])->find($id);
+        
+        if (!$post) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Пост не знайдено'
+            ], 404);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'data' => $post
+        ]);
+    }
 }
